@@ -24,8 +24,16 @@ The architecture is in a 3-tier system with each tier in its own project:
 2. Business - Business rules and processing. This separates read (queries) and write (command) operations which may allow read operations to be cached or operate on a read-replica store should performance demand that in the future.
 3. Data - Database models and data access.
 
-At this stage only Integration tests are required as there is no business logic of significance to test. My philosophy on testing is outlined here: https://winterlimelight.com/2017/12/17/automated-testing-priorities/, 
-and in the case of an API I consider Integraton tests paramount as they represent the consistent contract with callers (whereas unit tests represent implentation details).
+At this stage only Integration tests have been created as there is no business or api logic of significance to unit test.
+
+Test Coverage:
+1. Download and extract OpenCover https://github.com/OpenCover/opencover/releases/download/4.7.922/opencover.4.7.922.zip
+2. Download and extract ReportGenerator https://github.com/danielpalme/ReportGenerator/releases/download/v4.1.5/ReportGenerator_4.1.5.zip
+3. Change the paths to the above at the top of test-coverage.ps1
+4. Run test-coverage.ps1 and view the results by opening ./Coverage/index.htm
+
+Please note that OpenCover shows reduced branch coverage on await statements as described here: https://github.com/OpenCover/opencover/issues/881
+
 
 
 

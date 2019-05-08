@@ -11,7 +11,7 @@ using Business.Commands;
 
 namespace Tests.Integration
 {
-    public class CourseControllerTests //: IClassFixture<CustomWebApplicationFactory<Api.Startup>>
+    public class CourseControllerTests
     {
         private readonly CustomWebApplicationFactory<Api.Startup> _factory;
 
