@@ -30,11 +30,9 @@ namespace Api
                 opt.UseInMemoryDatabase("TempCourseDb")); // TODO - opt.UseSqlite(...
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            // TODO logger
-            // TODO global mvc pipeline exception handler (and test?)
-
             // TODO get a real DI system like autofac that can read an entire assembly and map it
             services.AddScoped<Business.CommandHandlers.ICommandHandler<Business.Commands.AddCourseRequest>, Business.CommandHandlers.AddCourse>();
+            services.AddScoped<Business.Queries.ICourseQueries, Business.Queries.CourseQueries>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +48,6 @@ namespace Api
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

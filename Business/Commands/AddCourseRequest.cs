@@ -11,7 +11,8 @@ namespace Business.Commands
         [Required]
         public string Description { get; set; }
 
+        // Nullable bool is used so that we can detect when the property was ignored. Without it a missing field would default to false
         [Required]
-        public bool IsPublic { get; set; }
+        public bool? IsPublic { get; set; }
     }
 }
