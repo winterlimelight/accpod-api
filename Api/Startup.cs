@@ -4,13 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using NJsonSchema;
+using NSwag.AspNetCore;
 
 namespace Api
 {
@@ -30,6 +29,17 @@ namespace Api
                 opt.UseInMemoryDatabase("TempCourseDb")); // TODO - opt.UseSqlite(...
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddSwaggerDocument(config =>
+            {
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "accpod api";
+                    document.Info.Description = "A simple ASP.NET Core web API";
+                    document.Info.TermsOfService = "None";
+                };
+            });
+
             // TODO get a real DI system like autofac that can read an entire assembly and map it
             services.AddScoped<Business.CommandHandlers.ICommandHandler<Business.Commands.AddCourseRequest>, Business.CommandHandlers.AddCourse>();
             services.AddScoped<Business.Queries.ICourseQueries, Business.Queries.CourseQueries>();
@@ -47,6 +57,9 @@ namespace Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUi3();
 
             app.UseMvc();
         }

@@ -13,7 +13,7 @@ To use in different environments change the launch profile argument to match the
 e.g. for Stage call *dotnet run --launch-profile Stage* which will make the api available at https://localhost:51997/ as well as reducing the console logging verbosity.
 
 ## Api Documentation
-TODO - OpenApi endpoint.
+Api documentation generated via OpenApi can be viewed in a browser at *baseurl/swagger* e.g. https://localhost:5001/swagger
 
 ## Data Store
 TODO
@@ -21,8 +21,8 @@ TODO
 ## Architecture
 The architecture is in a 3-tier system with each tier in its own project:
 1. Api - Hosts Http/s endpoints and would also handle authentication.
-2. Business - Business rules and processing.
-3. Data - Database models. Entity Framework should be considered as part of this layer, and hence is directly accessed in the business layer.
+2. Business - Business rules and processing. This separates read (queries) and write (command) operations which may allow read operations to be cached or operate on a read-replica store should performance demand that in the future.
+3. Data - Database models and data access.
 
 At this stage only Integration tests are required as there is no business logic of significance to test. My philosophy on testing is outlined here: https://winterlimelight.com/2017/12/17/automated-testing-priorities/, 
 and in the case of an API I consider Integraton tests paramount as they represent the consistent contract with callers (whereas unit tests represent implentation details).
