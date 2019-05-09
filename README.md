@@ -16,7 +16,7 @@ e.g. for Stage call *dotnet run --launch-profile Stage* which will make the api 
 Api documentation generated via OpenApi can be viewed in a browser at *baseurl/swagger* e.g. https://localhost:5001/swagger
 
 ## Data Store
-TODO
+An Sqlite database will be automatically created at Api/accpod.db when the website is started.
 
 ## Architecture
 The architecture is in a 3-tier system with each tier in its own project:

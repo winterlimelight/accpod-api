@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NJsonSchema;
 using NSwag.AspNetCore;
 
 namespace Api
@@ -26,7 +25,7 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Data.SqliteContext>(opt =>
-                opt.UseInMemoryDatabase("TempCourseDb")); // TODO - opt.UseSqlite(...
+                opt.UseSqlite("Data Source=accpod.db"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerDocument(config =>
@@ -60,6 +59,16 @@ namespace Api
 
             app.UseSwagger();
             app.UseSwaggerUi3();
+
+            if(env.EnvironmentName != "IntegrationTesting")
+            {
+                // create the database if it is absent, and migrate if it is present
+                using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+                {
+                    var context = serviceScope.ServiceProvider.GetRequiredService<Data.SqliteContext>();
+                    context.Database.Migrate();
+                }
+            }
 
             app.UseMvc();
         }
