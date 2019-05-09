@@ -37,6 +37,6 @@ cd $PSScriptRoot
 
 dotnet "$reportGenerator" `
 	"-reports:$PSScriptRoot/Coverage/Integration.xml" `
-	"-targetdir:$reportFolder"
+	"-targetdir:$PSScriptRoot/Coverage"
 
 Pop-Location
